@@ -34,6 +34,7 @@
 #include <string>
 #include <thread>
 #include <vector>
+#include <gperftools/profiler.h>
 
 // system includes
 #include <eigen_conversions/eigen_msg.h>
@@ -652,10 +653,12 @@ int main(int argc, char* argv[])
     ROS_INFO("Calling solve...");
     moveit_msgs::PlanningScene planning_scene;
     planning_scene.robot_state = start_state;
+    ProfilerStart("ara.prof");
     if (!planner.solve(planning_scene, req, res)) {
         ROS_ERROR("Failed to plan.");
         return 1;
     }
+    ProfilerStop();
 
     ///////////////////////////////////
     // Visualizations and Statistics //
@@ -671,17 +674,17 @@ int main(int argc, char* argv[])
     ROS_INFO("Animate path");
 
     size_t pidx = 0;
-    while (ros::ok()) {
-        auto& point = res.trajectory.joint_trajectory.points[pidx];
-        auto markers = cc.getCollisionRobotVisualization(point.positions);
-        for (auto& m : markers.markers) {
-            m.ns = "path_animation";
-        }
-        SV_SHOW_INFO(markers);
-        std::this_thread::sleep_for(std::chrono::milliseconds(200));
-        pidx++;
-        pidx %= res.trajectory.joint_trajectory.points.size();
-    }
+    //while (ros::ok()) {
+    //    auto& point = res.trajectory.joint_trajectory.points[pidx];
+    //    auto markers = cc.getCollisionRobotVisualization(point.positions);
+    //    for (auto& m : markers.markers) {
+    //        m.ns = "path_animation";
+    //    }
+    //    SV_SHOW_INFO(markers);
+    //    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    //    pidx++;
+    //    pidx %= res.trajectory.joint_trajectory.points.size();
+    //}
 
     return 0;
 }
