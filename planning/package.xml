@@ -51,10 +51,21 @@
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>smpl</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>moveit_msgs</build_depend>
+  <build_depend>visualization_msgs</build_depend>
+  <build_depend>sbpl_collision_checking</build_depend>
+  <build_depend>sbpl_kdl_robot_model</build_depend>
+  <build_depend>smpl</build_depend>
   <build_export_depend>roscpp</build_export_depend>
   <build_export_depend>smpl</build_export_depend>
   <exec_depend>roscpp</exec_depend>
   <exec_depend>smpl</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>moveit_msgs</exec_depend>
+  <exec_depend>visualization_msgs</exec_depend>
+  <exec_depend>sbpl_collision_checking</exec_depend>
+  <exec_depend>sbpl_kdl_robot_model</exec_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
