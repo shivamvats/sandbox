@@ -1,4 +1,4 @@
-[x] Profile ARA* from smpl_test using google-profiler.
+- [x] Profile ARA* from smpl_test using google-profiler.
 
 Instructions
 ============
