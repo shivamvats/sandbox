@@ -48,7 +48,7 @@ class GridWorld : public ConnectivityPolicy {
 
     auto neighbours(std::pair<int, int> point)
         -> decltype(ConnectivityPolicy::neighbours(point));
-    std::vector<std::pair<int, int>> succs(std::pair<int, int> point);
+    std::vector<std::pair<int, int>> Succs(std::pair<int, int> point);
     bool isValid(std::pair<int, int> point){
         return true;
     }
@@ -88,14 +88,14 @@ auto GridWorld<CP>::neighbours(std::pair<int, int> point)
 }
 
 template <typename T>
-std::vector<std::pair<int, int>> GridWorld<T>::succs(
+std::vector<std::pair<int, int>> GridWorld<T>::Succs(
         std::pair<int, int> point){
-    std::vector<std::pair<int, int>> succs;
+    std::vector<std::pair<int, int>> Succs;
     for(auto& nbr: neighbours(point)){
         if(isValid(nbr))
-            succs.push_back(nbr);
+            Succs.push_back(nbr);
     }
-    return succs;
+    return Succs;
 }
 
 #endif
