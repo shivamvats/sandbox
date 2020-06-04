@@ -10,7 +10,15 @@ def bar():
     global y
     y = 10
 
+def printZ():
+    print(z)
+
 if __name__ == "__main__":
     fn()
     bar()
     print(y)
+
+    # Not need to use the global keyboard
+    # Variables defined in an `if` block leak to the enclosing namespace
+    z = 'shivam'
+    printZ()
