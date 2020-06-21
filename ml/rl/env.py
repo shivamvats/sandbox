@@ -1,51 +1,108 @@
 import numpy as np
-from config import ACTIONS, ACTION_MAP, ROWS, COLS, TERMINAL
+import gym
+from utils import getRandInRange
 
 
-def getEnv():
-    env = np.zeros((3, 4))
-    env[1, 1] = 1
-    return env
+class GridWorldEnv(gym.Env):
+    metadata = {'render.modes': ['human']}
 
-def getReward(s):
-    if s == (0, 3):
-        return 1
-    elif s == (1, 3):
-        return -1
-    else:
-        return 0
+    def __init__(self, cfg):
+        self.cfg = cfg
 
-def getSuccs(s, actuated_action):
-    """Model vs model-free
+        # Construct gridworld
+        self.rows, self.cols = 3, 4
+        self.env = np.zeros((self.rows, self.cols))
+        self.env[1, 1] = 1
+        self.terminal_states = [(0, 3), (1, 3)]
 
-    Underlying transition model: 0.8 chance that agents goes in the `a`
-    direction, 0.1 chance that it deviates on the either side of `a`
+        # Action space
+        self.actions = {
+                'L' : (0, -1),
+                'U' : (-1, 0),
+                'R' : (0, +1),
+                'D' : (+1, 0)
+                }
 
-    If I assume that the model is known, then I have access to these
-    probabilities. Otherwise, I can do a lot of rollouts and estimate the
-    probabilities.
-    """
-    a = actuated_action.upper()
-    action_id = ACTIONS.index(a)
-    # Extra element for stay-in-place action
-    probs = [0 for i in range(len(ACTIONS) + 1)]
-    probs[action_id] = 0.8
-    probs[(action_id + len(ACTIONS) + 1) % len(ACTIONS)] = 0.1
-    probs[(action_id + len(ACTIONS) - 1) % len(ACTIONS)] = 0.1
-    executed_action = ACTIONS[np.random.choice(5, p=probs)]
+    def step(self, a):
+        """Apply action and return obs, reward, done and info"""
+        s = self.state
+        info = {'obs': ['env', 'state']}
+        done = False
+        if s in self.terminal_states:
+            done = True
+        else:
+            self.state = self.getSuccs(self.state, a)
+            print(self.state)
+        reward = self.getReward(self.state)
+        obs = (self.env, self.state)
+        return (obs, reward, done, info)
 
-    # Check bounds
-    row = s[0] + ACTION_MAP[executed_action][0]
-    col = s[1] + ACTION_MAP[executed_action][1]
-    if row >= 0 and row < ROWS and col >= 0 and col < COLS:
-        return (row, col)
-    else:
-        return s
+    def reset(self):
+        self.state = (np.random.randint(0, self.rows), np.random.randint(0, self.cols))
+        while not self.isValid(self.state):
+            self.state = (np.random.randint(0, self.rows), np.random.randint(0, self.cols))
 
-def step(s, a):
-    if s in TERMINAL:
-        return (s, getReward(s))
-    else:
-        succ = getSuccs(s, a)
-        return (succ, getReward(succ))
+        obs = (self.env, self.state)
+        reward = 0
+        done = False
+        info = {'obs': ['env', 'state']}
+        return (obs, reward, done, info)
+
+    def render(self, mode='human'):
+        self.env[self.state] = 5
+        print(self.env)
+        self.env[self.state] = 0
+
+    def close(self):
+        pass
+
+    def shape(self):
+        return self.env.shape
+
+    def isValid(self, state):
+        row, col = state
+        if row >= 0 and row < self.rows and col >= 0 and col < self.cols:
+            return not self.env[state]
+        else:
+            return False
+
+    def getReward(self, s):
+        if s == (0, 3):
+            return 1
+        elif s == (1, 3):
+            return -1
+        else:
+            return 0
+
+    def getSuccs(self, s, a):
+        """Model vs model-free
+
+        Underlying transition model: 0.8 chance that agents goes in the `a`
+        direction, 0.1 chance that it deviates on the either side of `a`
+
+        If I assume that the model is known, then I have access to these
+        probabilities. Otherwise, I can do a lot of rollouts and estimate the
+        probabilities.
+        """
+        a = a.upper()
+        action_id = list(self.actions.keys()).index(a)
+        probs = [0 for i in range(len(self.actions))]
+        probs[action_id] = 0.8
+        probs[(action_id + len(self.actions) + 1) % len(self.actions)] = 0.1
+        probs[(action_id + len(self.actions) - 1) % len(self.actions)] = 0.1
+        print("actions:", list(self.actions.keys()))
+        print(probs)
+        executed_action = list(self.actions.keys())[np.random.choice(4, p=probs)]
+
+
+        # Check bounds
+        row = s[0] + self.actions[executed_action][0]
+        col = s[1] + self.actions[executed_action][1]
+        print("Action: ", executed_action, self.actions[executed_action])
+
+        if self.isValid((row, col)):
+            return (row, col)
+        else:
+            # Stay in place
+            return s
 
