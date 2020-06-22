@@ -7,7 +7,7 @@ ML
 --
 
 RL
-~~
+--
 
 1. Policy Iteration (WIP)
 2. Value Iteration (WIP)
@@ -21,7 +21,7 @@ C++
 3. std::function
 4. constexpr
 5. Boost 
-  * Rtree
+    * Rtree
 6. xtensor
 
 Python
