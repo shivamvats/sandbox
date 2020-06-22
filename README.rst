@@ -1,9 +1,22 @@
 Sandbox
 =======
 
-Test code to try interesting features of different languages.
+A space to implement and play with algorithms and programming languages.
+
+ML
+--
+
+RL
+~~
+
+1. Policy Iteration (WIP)
+2. Value Iteration (WIP)
+3. Q learning (WIP)
 
 C++
 ---
 
 1. Return Value Optimization
+
+Python
+------
