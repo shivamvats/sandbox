@@ -3,8 +3,6 @@ Sandbox
 
 A space to implement and play with algorithms and programming languages.
 
-ML
---
 
 RL
 --
@@ -12,6 +10,9 @@ RL
 1. Policy Iteration (WIP)
 2. Value Iteration (WIP)
 3. Q learning (WIP)
+
+ML
+--
 
 C++
 ---
@@ -21,7 +22,9 @@ C++
 3. std::function
 4. constexpr
 5. Boost 
-    * Rtree
+
+   * Rtree
+   
 6. xtensor
 
 Python
