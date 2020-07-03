@@ -8,7 +8,7 @@
 % non-linearity.
 
 x0 = 10;
-tspan = [0 10];
+tspan = [0 5];
 [t, x] = ode45(@free, tspan, x0);
 gcf;
 hold on;
@@ -20,6 +20,8 @@ plot(t, x, '-b');
 [t, x] = ode45(@feedback_linear, tspan, x0);
 plot(t, x, '-g');
 
+[t, x] = ode45(@sontag, tspan, x0);
+plot(t, x, '-o');
 
 function [dxdt] = free(t, x)
     dxdt = -x*x*x;
@@ -33,4 +35,10 @@ end
 function [dxdt] = feedback_linear(t, x)
     Kp = 1;
     dxdt = - Kp*x;
+end
+
+% Theoretically best control
+% using Sontag's formula
+function [dxdt] = sontag(t, x)
+    dxdt = -x.^3 - x * nthroot(x.^4 +1, 2);
 end

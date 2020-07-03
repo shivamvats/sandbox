@@ -13,7 +13,10 @@ int main(int argc, char** argv)
     xt::xarray<double> arr2
     {5.0, 6.0, 7.0};
 
-    auto res = xt::view(arr1, 1) + arr2;
+    auto res = xt::view(arr1, 0) * arr2;
+    std::cout<<"Output:\n";
     std::cout<<res;
+    std::cout<<typeid(res.shape()).name()<< "\n";
+    std::cout<<"Shape: "<< res.shape()<< "\n";
     return 0;
 }
