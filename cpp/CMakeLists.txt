@@ -7,5 +7,5 @@ include_directories( include
     ${xtensor_INCLUDE_DIRS})
 
 add_executable( rvo main/rvo.cpp src/rvo.cpp )
-add_executable( xtensor_test src/xtensor.cpp )
-add_executable( template_executable src/template_recursion.cpp )
+add_executable( xtensor_test main/xtensor.cpp )
+add_executable( template_executable main/template_recursion.cpp )
