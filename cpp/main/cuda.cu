@@ -10,13 +10,11 @@ void add(int n, float *x, float *y) {
 }
 
 int main(void) {
-    int N = 1<<20; // 1M elements
+    int N = 1<<2; // 1M elements
 
-    //float *x = new float[N];
-    //float *y = new float[N];
     float *x, *y;
-    cudaMallocManaged(&x, N*sizeof(float));
-    cudaMallocManaged(&y, N*sizeof(float))
+    cudaMalloc(&x, N*sizeof(float));
+    cudaMalloc(&y, N*sizeof(float));
 
     // initialize x and y arrays on the host
     for (int i = 0; i < N; i++) {
@@ -24,6 +22,7 @@ int main(void) {
         y[i] = 2.0f;
     }
 
+    /*
     // Run kernel on 1M elements on the CPU
     add<<<1, 1>>>(N, x, y);
 
@@ -37,6 +36,7 @@ int main(void) {
     maxError = fmax(maxError, fabs(y[i]-3.0f));
     std::cout << "Max error: " << maxError << std::endl;
 
+    */
     // Free memory
     //delete [] x;
     //delete [] y;

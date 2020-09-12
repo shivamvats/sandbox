@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JS tutorial</title>
+    <script>
+      function sayHello(who) {
+        document.write("Hello, " + who);
+      }
+    </script>
+  </head>
+  <body>
+    <script>
+      var myvar = "This is "; // This is my first var.
+      var anothervar = "My World";
+      var sentence = myvar + anothervar;
+      document.write(sentence);
+
+      // Property
+      var alpha = "Shivam";
+      var length = alpha.length;
+      document.write(length)
+      document.write('\n')
+
+      // Array
+      var a = new Array(7);
+      a[0] = 'cat';
+      a[1] = 'dog';
+      a[2] = 85;
+      document.write(a)
+
+      // Function
+      var name = "Shivam";
+      document.write("<br>");
+      sayHello(name);
+      document.write("<br>");
+
+      // If cond
+      var a = 2;
+      if (a > 10) {
+        alert(a);
+      } else {
+        alert("This condition was false");
+      }
+
+      // For loop
+      for (i=0; i<5; i++) {
+        document.write("This is iteration " + i + "<br>");
+      }
+    </script>
+  </body>
+</html>
